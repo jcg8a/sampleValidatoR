@@ -28,3 +28,25 @@
 .construct_loop_question <- function(x, y){
   dplyr::if_else(is.na(y), x, paste0(y, "_", x))
 }
+
+
+
+
+
+
+
+
+
+# -------------------------------------------------------------------------------
+# Filtering columns to research
+# -------------------------------------------------------------------------------
+
+.filter_columns <- function(.df, .loop_question){
+  arg_loop <- paste0("^", .loop_question)
+  arg_check_all <- paste0(.loop_question, "[_]")
+  arg_select_one <- paste0(.loop_question, "$")
+  out <- dplyr::select(.df, grep(arg_check_all, colnames (.df)) | grep(arg_select_one, colnames(.df)))
+  out <- dplyr::select(out, grep(arg_loop, colnames(out)))
+
+  out
+}
