@@ -16,11 +16,11 @@
 
   aux_other <- mutate(aux_other, result_col = aux_other[, "result_col_other"] - aux_other[, "result_col_oe"])
 
-  out <- c(sum(aux_other[,"result_col_other"]),
-           sum(out[,"result_col_oe"]),
-           sum(out[, "result_col"] != 0),
-           sum(out[, "result_col"] == 1),
-           sum(out[, "result_col"] == -1))
+  out <- c(sum(aux_other[,"result_col_other"], na.rm = TRUE),
+           sum(aux_other[,"result_col_oe"], na.rm = TRUE),
+           sum(aux_other[, "result_col"] != 0, na.rm = TRUE),
+           sum(aux_other[, "result_col"] == 1, na.rm = TRUE),
+           sum(aux_other[, "result_col"] == -1, na.rm = TRUE))
 
   names(out) <- c("respondent_other", "respondent_oe", "result", "result_forward", "result_backward")
 
