@@ -26,3 +26,40 @@
 
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# Aux validate exclusive
+#-------------------------------------------------------------------------------
+
+# Input: .df should be a data frame of multiple columns (as many as the target question has)
+# Output: an standardized named vector.
+
+.validate_exclusive <- function(.df, .pre_option){
+
+  aux_exclusive <- mutate(.df, result_col_pre = rowSums(.df == .pre_option, na.rm = TRUE),
+                          result_col_post = case_when(rowSums(!is.na(.df)) == 0 ~ 0L,
+                                                      rowSums(.df != "0", na.rm = TRUE) - rowSums(.df == .pre_option, na.rm = TRUE) > 0 ~ 0L,
+                                                      TRUE ~ 1L))
+
+  aux_exclusive[, "result_col"] <- aux_exclusive[, "result_col_pre"] - aux_exclusive[, "result_col_post"]
+
+  out <- c(sum(aux_exclusive[, "result_col_pre"], na.rm = TRUE),
+           sum(aux_exclusive[, "result_col_post"], na.rm = TRUE),
+           sum(aux_exclusive[, "result_col"] != 0, na.rm = TRUE),
+           sum(aux_exclusive[, "result_col"] == 1, na.rm = TRUE),
+           sum(aux_exclusive[, "result_col"] == -1, na.rm = TRUE))
+
+  names(out) <- c("respondent_pre", "respondent_post", "result", "result_forward", "result_backward")
+
+  return(out)
+}
+
