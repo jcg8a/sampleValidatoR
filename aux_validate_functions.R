@@ -36,6 +36,8 @@
 
 
 
+
+
 #-------------------------------------------------------------------------------
 # Aux validate exclusive
 #-------------------------------------------------------------------------------
@@ -63,3 +65,43 @@
   return(out)
 }
 
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# Aux validate rank most
+#-------------------------------------------------------------------------------
+
+# Input: .df should be a data frame of multiple columns (as many as the target question has)
+# Output: an standardized named vector.
+
+.validate_most <- function(.survey, .pre, .post){
+  aux_pre <- .filter_columns(.df = .survey, .loop_question = .pre)
+  aux_pre <- select(aux_pre, -stringr::str_which(colnames(aux_pre), "_text"))
+
+  aux_post <- .filter_columns(.df = .survey, .loop_question = .post)
+  aux_post <- select(aux_post, -stringr::str_which(colnames(aux_post), "_text"))
+
+  aux_pre <- mutate(aux_pre, result_col_pre_aux = apply(aux_pre, 1, function(x) sum(x != "0")))
+  aux_pre <- mutate(aux_pre, result_col_pre = if_else(aux_pre[, "result_col_pre_aux"] > 1, 1L, 0L, missing = 0L))
+  aux <- aux_pre[, "result_col_pre"]
+
+  # I dont worry about the column index because rank is always a select one question, isn't it?
+  out <- mutate(aux_post, result_col_post = if_else(is.na(aux_post[, 1]), 0L, 1L, missing = 0L))
+  out <- out[, "result_col_post"]
+
+  out <- bind_cols(aux, out)
+
+  out <- mutate(out, result = out[ , "result_col_pre"] - out[ , "result_col_post"])
+
+  result <- sum(out[, 3] != 0)
+  respondent_pre <- sum(out[, 1])
+  respondent_post <- sum(out[, 2])
+  result_forward <- sum(out[, 3] == 1)
+  result_backward <- sum(out[, 3] == -1)
+}
