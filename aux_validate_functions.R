@@ -98,3 +98,40 @@
 
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# Aux validate terminate
+#-------------------------------------------------------------------------------
+
+# Input: Two df: one for the question with the terminate option, called q_terminate.
+#                Other for the questions going from the next to q_terminate and the last before demographic variables
+#        One vector of options that trigger the terminate option
+# Output: an standardized named vector.
+
+.validate_terminate <- function(.df_pre, .pre_option, .df_post){
+  aux_terminate <- tibble(result_col_pre = if_else(apply(.df_pre, 1, function(x) sum(x %in% .pre_option)) > 0, 1L, 0L))
+
+  aux_terminate <- mutate(aux_terminate,
+                          result_col_post = if_else(apply(.df_post, 1, function(x) sum(!is.na(x))) > 0, 0L, 1L))
+
+  aux_terminate[ ,"result_col"] <- aux_terminate[, "result_col_pre"] - aux_terminate[, "result_col_post"]
+
+  out <- c(sum(aux_terminate[, "result_col_pre"], na.rm = TRUE),
+           sum(aux_terminate[, "result_col_post"], na.rm = TRUE),
+           sum(aux_terminate[, "result_col"] != 0, na.rm = TRUE),
+           sum(aux_terminate[, "result_col"] == 1, na.rm = TRUE),
+           sum(aux_terminate[, "result_col"] == -1, na.rm = TRUE))
+
+  names(out) <- c("respondent_pre", "respondent_post", "result", "result_forward", "result_backward")
+
+  return(out)
+}
