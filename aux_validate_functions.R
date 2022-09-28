@@ -83,7 +83,7 @@
 .validate_most <- function(.df_pre, .df_post){
   aux_most <- tibble(pre_count = apply(.df_pre, 1, function(x) sum(x != "0")))
   aux_most <- mutate(aux_most, pre_complete = if_else(pre_count > 1, 1L, 0L, missing = NA_integer_),
-                     post_count = apply(.df_post, 1, function(x) sum(x != "0")),
+                     post_count = apply(.df_post, 1, function(x) sum(!is.na(x))),
                      post_complete = if_else(post_count > 0, 1L, NA_integer_, missing = NA_integer_))
 
   aux_most[ ,"result_col"] <- aux_most[, "pre_complete"] - aux_most[, "post_complete"]
