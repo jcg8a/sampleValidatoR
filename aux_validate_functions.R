@@ -95,4 +95,6 @@
            sum(aux_most[, "result_col"] == -1, na.rm = TRUE))
 
   names(out) <- c("respondent_pre", "respondent_post", "result", "result_forward", "result_backward")
+
+  return(out)
 }
