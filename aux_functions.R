@@ -78,3 +78,20 @@
 .label_question_in <- function(.df, .pre_option){
   out <- if_else(rowSums(apply(.df, 2, function(x) x %in% .pre_option)) > 0, 1L, 0L)
 }
+
+
+
+
+
+
+
+
+
+
+
+# -------------------------------------------------------------------------------
+# Labeling options not equal to the given parameter
+# -------------------------------------------------------------------------------
+.label_question_notin <- function(.df, .pre_option){
+  out <- if_else(rowSums(apply(.df, 2, function(x) x %in% .pre_option)) == 0, 1L, 0L)
+}
