@@ -135,3 +135,36 @@
 
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# Aux validate two way
+#-------------------------------------------------------------------------------
+
+# Input: two vectors of integer values
+# Output: an standardized named vector.
+.validate_two_way <- function(.pre, .post){
+  aux_compare <- cbind(.pre, .post)
+  colnames(aux_compare) <- c("result_col_pre", "result_col_post")
+
+  result_col <- aux_compare[, "result_col_pre"] - aux_compare[, "result_col_post"]
+
+  out <- c(sum(aux_compare[, "result_col_pre"], na.rm = TRUE),
+           sum(aux_compare[, "result_col_post"], na.rm = TRUE),
+           sum(result_col != 0, na.rm = TRUE),
+           sum(result_col == 1, na.rm = TRUE),
+           sum(result_col == -1, na.rm = TRUE))
+
+  names(out) <- c("respondent_pre", "respondent_post", "result", "result_forward", "result_backward")
+
+  return(out)
+}
+
