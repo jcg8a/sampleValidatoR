@@ -95,3 +95,23 @@
 .label_question_notin <- function(.df, .pre_option){
   out <- if_else(rowSums(apply(.df, 2, function(x) x %in% .pre_option)) == 0, 1L, 0L)
 }
+
+
+
+
+
+
+
+
+
+
+# -------------------------------------------------------------------------------
+# Binarizing questions when they meet a condition
+# -------------------------------------------------------------------------------
+.binarize_question <- function(.df, .options){
+  out <- if_else(rowSums(!is.na(.df)) == 0,
+                 NA_integer_,
+                 as.integer(rowSums(.df == .options, na.rm = TRUE)))
+  return(out)
+}
+
