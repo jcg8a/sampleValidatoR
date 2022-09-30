@@ -115,3 +115,14 @@
   return(out)
 }
 
+
+
+.join_binaries <- function(...){
+  aux <- cbind(...)
+  out <- if_else(rowSums(!is.na(aux)) == 0,
+                 NA_integer_,
+                 if_else(rowSums(aux, na.rm = TRUE) > 0, 1L, 0L))
+  return(out)
+}
+
+
