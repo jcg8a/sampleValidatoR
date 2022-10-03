@@ -117,8 +117,13 @@
 
 
 
-.join_binaries <- function(...){
-  aux <- cbind(...)
+.join_binaries <- function(list_questions, list_options){
+  aux <- data.frame(id = seq(1:nrow(list_questions[[1]])))
+  for(i in 1:length(list_questions)){
+    aux_ind <- .binarize_question(.df = list_questions[[i]], .options = list_options[[i]])
+    aux <- cbind(aux, aux_ind)
+  }
+  aux$id <- NULL
   out <- if_else(rowSums(!is.na(aux)) == 0,
                  NA_integer_,
                  if_else(rowSums(aux, na.rm = TRUE) > 0, 1L, 0L))
