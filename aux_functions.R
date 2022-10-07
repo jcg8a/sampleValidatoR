@@ -131,3 +131,25 @@
 }
 
 
+
+
+
+
+# -------------------------------------------------------------------------------
+# Filtering columns to research for validate_other
+# -------------------------------------------------------------------------------
+.filter_columns_other <- function(.df, .question, .other){
+  out <- list()
+  aux <- .filter_columns(.df, .question)
+
+  column_index <- unique(which(aux == .other, arr.ind = TRUE)[, 2])
+
+  for (i in column_index) {
+    other_column <- colnames(aux[,column_index[i]])
+    oe_column <- paste0(other_column, "_text")
+
+    out[[i]] <- aux[, c(other_column, oe_column)]
+  }
+  return(out)
+}
+
