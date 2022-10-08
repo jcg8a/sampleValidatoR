@@ -144,7 +144,7 @@
 
   column_index <- unique(which(aux == .other, arr.ind = TRUE)[, 2])
 
-  for (i in column_index) {
+  for (i in 1:length(column_index)) {
     other_column <- colnames(aux[,column_index[i]])
     oe_column <- paste0(other_column, "_text")
 
