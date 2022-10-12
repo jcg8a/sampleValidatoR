@@ -146,9 +146,8 @@
 
   for (i in 1:length(column_index)) {
     other_column <- colnames(aux[,column_index[i]])
-    oe_column <- paste0(other_column, "_text")
 
-    out[[i]] <- aux[, c(other_column, oe_column)]
+    out[[i]] <- select(aux, other_column, starts_with(other_column) & ends_with("_text"))
   }
   return(out)
 }
