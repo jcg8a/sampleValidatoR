@@ -49,3 +49,49 @@ v_other <- function(..., survey = tb_survey, text_other = "Other, please specify
   # 6. Output
   return(tables)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function validate exclusive
+#-------------------------------------------------------------------------------
+
+v_exclusive <- function(..., survey = tb_survey){
+  # 1. Common validators
+  # 2. Input formatting
+  input <- ...names()
+  # 3. Column selection
+  table <- list()
+  for (i in 1:length(input)) {
+    table[[i]] <- .filter_columns(survey, input[i])
+  }
+  # 4. Additional validations
+  # 5. Main function
+  out <- list()
+  for (i in 1:length(table)) {
+    aux <- list()
+    for (j in 1:length(...elt(i))) {
+      aux[[j]] <- .validate_exclusive(table[[i]], ...elt(i)[j])
+    }
+    out[[i]] <- aux
+
+  }
+  # 6. Output
+  return(out)
+}
