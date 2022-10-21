@@ -152,3 +152,20 @@
   return(out)
 }
 
+
+
+
+
+
+
+# -------------------------------------------------------------------------------
+# Filtering columns to research for v_terminate
+# -------------------------------------------------------------------------------
+.filter_columns_terminate <- function(.survey, .q_first, .q_last){
+  col_names <- colnames(.survey)
+  index_q_first <- min(stringr::str_which(col_names, .q_first))
+  index_q_last <- max(stringr::str_which(col_names, .q_last))
+
+  out <- select(.survey, col_names[index_q_first]:col_names[index_q_last])
+  return(out)
+}
