@@ -169,3 +169,57 @@
   out <- select(.survey, col_names[index_q_first]:col_names[index_q_last])
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# -------------------------------------------------------------------------------
+# List options for the given question
+# -------------------------------------------------------------------------------
+.glance_question <- function(.survey, .pre){
+  aux <- .filter_columns(.df = .survey, .loop_question = .pre)
+  # print("filter variables")
+  aux <- select(aux, -stringr::str_which(colnames(aux), "_text"))
+  # print("drop _text columns")
+
+  if(ncol(aux) == 1){
+    out <- aux %>%
+      group_by((!!rlang::sym(.pre))) %>%
+      summarise(N = n())
+    # print("Summarise N")
+
+    out <- filter(out, !is.na(out[, 1]))
+    # print(out)
+    return(out)
+  }
+
+  if(ncol(aux) > 1){
+    out <- tibble()
+    for(i in 1:ncol(aux)){
+      aux_table <- aux %>%
+        group_by(aux[,i]) %>%
+        summarise(N = n())
+
+      colnames(aux_table) <- c("question", "N")
+      aux_table$question <- as.character(aux_table$question)
+
+      out <- bind_rows(out, aux_table)
+    }
+
+    out <- filter(out, !is.na(out[,"question"]))
+    out <- filter(out, out[, "question"] != 0)
+
+    colnames(out) <- c(.pre, "N")
+    return(out)
+  }
+}
