@@ -95,3 +95,41 @@ v_exclusive <- function(..., survey = tb_survey){
   # 6. Output
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function validate rank
+#-------------------------------------------------------------------------------
+
+v_rank <- function(..., survey = tb_survey){
+  # 1. Common validators
+  # 2. Input formatting
+  input <- list(...)
+  question <- ...names()
+  out <- list()
+  for (i in 1:length(input)) {
+    # 3. Column selection
+    aux_q <- .filter_columns(survey, question[i])
+    aux_r <- .filter_columns(survey, input[[i]])
+    # 4. Additional validations
+    # 5. Main function
+    out[[i]] <- .validate_most(aux_q, aux_r)
+  }
+  # 6. Output
+  return(out)
+}
