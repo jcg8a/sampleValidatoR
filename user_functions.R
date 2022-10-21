@@ -133,3 +133,33 @@ v_rank <- function(..., survey = tb_survey){
   # 6. Output
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function validate terminate
+#-------------------------------------------------------------------------------
+v_terminate <- function(..., survey = tb_survey){
+  # 1. Common validators
+  # 2. Input formatting
+  # 3. Column selection
+  aux_terminate <- .filter_columns(survey, ...names()[1])
+  aux_q <- .filter_columns_terminate(survey, ...elt(2), ...elt(3))
+  # 4. Additional validations
+  # 5. Main function
+  out <- .validate_terminate(aux_terminate, ...elt(1), aux_q)
+  # 6. Output
+  return(out)
+}
