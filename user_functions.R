@@ -163,3 +163,23 @@ v_terminate <- function(..., survey = tb_survey){
   # 6. Output
   return(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function glance
+#-------------------------------------------------------------------------------
+glance <- function(question, survey = tb_survey){
+  out <- .glance_question(.survey = survey, .pre = question)
+  knitr::kable(out)
+}
