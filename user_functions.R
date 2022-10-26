@@ -301,3 +301,33 @@ import_metadata <- function(path_file){
 
   metadata
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function import_survey
+#-------------------------------------------------------------------------------
+import_survey <- function(path_file, metadata, drop_test = c("Spain", "Argentina")){
+  tb_survey <- readxl::read_excel(path_file, skip = 2, col_names = FALSE)
+
+  colnames(tb_survey) <- t(metadata[,"key_adj"])
+
+  tb_survey <- .drop_tester(.survey = tb_survey, .drop = drop_test)
+
+
+  tb_survey
+}
