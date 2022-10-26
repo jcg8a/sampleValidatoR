@@ -213,3 +213,26 @@ qualification <- function(survey){
 
   knitr::kable(tb_qualif)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function table_detail
+#-------------------------------------------------------------------------------
+table_detail <- function(survey, metadata){
+  out <- .create_table_detail(survey, metadata)
+  kable(out)
+}
