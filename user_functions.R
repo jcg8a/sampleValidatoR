@@ -236,3 +236,32 @@ table_detail <- function(survey, metadata){
   out <- .create_table_detail(survey, metadata)
   kable(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function table_resume
+#-------------------------------------------------------------------------------
+table_resume <- function(survey, metadata){
+  out <- .create_table_resume(survey, metadata)
+  cat("\n **README:** \n
+      * Be aware of type_of question = other questions. Explore the table_detail function for a detailed description of the data. \n
+      * type_of_question = check all that apply: accounts for the number of columns associated to that loop_question. \n
+      * type_of_question =  probably a rank question: I am still testing this guessing. That explains the probably")
+
+  kable(out)
+}
