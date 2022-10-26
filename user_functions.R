@@ -183,3 +183,33 @@ glance <- function(question, survey = tb_survey){
   out <- .glance_question(.survey = survey, .pre = question)
   knitr::kable(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function qualification
+#-------------------------------------------------------------------------------
+qualification <- function(survey){
+  tb_qualif <- tibble(qualification = c("whole Sample", "Complete", "Disqualified", "Bad Responses", "Disagree", "Partial", "Robot"),
+                      N = rep(0,7), Share = rep(0,7))
+
+  for(i in 1:nrow(tb_qualif)){
+    tb_qualif[i,2] <- sum(survey$qualification == tb_qualif$qualification[i])
+    tb_qualif[i,3] <- sum(survey$qualification == tb_qualif$qualification[i])/nrow(survey)
+  }
+
+  tb_qualif[1,2] <- sum(!is.na(survey$qualification))
+  tb_qualif[1,3] <- sum(!is.na(survey$qualification))/nrow(survey)
+
+  knitr::kable(tb_qualif)
+}
