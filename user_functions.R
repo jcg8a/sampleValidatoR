@@ -265,3 +265,39 @@ table_resume <- function(survey, metadata){
 
   kable(out)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function import_metadata
+#-------------------------------------------------------------------------------
+import_metadata <- function(path_file){
+
+  metadata <- readxl::read_excel(path_file, n_max = 2, col_names = FALSE)
+  metadata <- as.data.frame(t(metadata))
+  metadata <- metadata %>% dplyr::mutate(V3 = dplyr::if_else(str_starts(V1,"D") & stringr::str_starts(V2, "Adjusted"), paste0(V1,"_Adjusted"),V1))
+
+  metadata <- as_tibble(metadata) %>%
+    mutate(V3 = str_to_lower(V3))
+  colnames(metadata) <- c("key", "question_text", "key_adj")
+
+  metadata <- metadata %>%
+    dplyr::mutate(loop = .extract_loop(x = key_adj))
+  metadata <- metadata %>%
+    dplyr::mutate(iteration = .extract_iteration(x = key_adj, y = loop))
+  metadata <- metadata %>%
+    dplyr::mutate(question = .extract_question(x = iteration))
+  metadata <- metadata %>%
+    dplyr::mutate(loop_question = .construct_loop_question(x = question, y = loop))
+
+  metadata
+}
