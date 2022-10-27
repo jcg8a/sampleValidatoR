@@ -256,7 +256,7 @@ table_detail <- function(survey, metadata){
 #-------------------------------------------------------------------------------
 # User function table_resume
 #-------------------------------------------------------------------------------
-table_resume <- function(survey, metadata){
+table_resume <- function(survey = tb_survey, metadata = metadata){
   out <- .create_table_resume(survey, metadata)
   cat("\n **README:** \n
       * Be aware of type_of question = other questions. Explore the table_detail function for a detailed description of the data. \n
