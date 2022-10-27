@@ -282,7 +282,7 @@ table_resume <- function(survey, metadata){
 #-------------------------------------------------------------------------------
 import_metadata <- function(path_file){
 
-  metadata <- readxl::read_excel(path_file, n_max = 2, col_names = FALSE)
+  metadata <- readxl::read_excel(path_file, n_max = 2, col_names = FALSE, .name_repair = "minimal")
   metadata <- as.data.frame(t(metadata))
   metadata <- metadata %>% dplyr::mutate(V3 = dplyr::if_else(str_starts(V1,"D") & stringr::str_starts(V2, "Adjusted"), paste0(V1,"_Adjusted"),V1))
 
