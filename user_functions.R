@@ -199,7 +199,7 @@ glance <- function(question, survey = tb_survey){
 #-------------------------------------------------------------------------------
 # User function qualification
 #-------------------------------------------------------------------------------
-qualification <- function(survey){
+qualification <- function(survey = tb_survey){
   tb_qualif <- tibble(qualification = c("whole Sample", "Complete", "Disqualified", "Bad Responses", "Disagree", "Partial", "Robot"),
                       N = rep(0,7), Share = rep(0,7))
 
