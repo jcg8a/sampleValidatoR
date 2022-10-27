@@ -321,7 +321,7 @@ import_metadata <- function(path_file){
 #-------------------------------------------------------------------------------
 # User function import_survey
 #-------------------------------------------------------------------------------
-import_survey <- function(path_file, metadata, drop_test = c("Spain", "Argentina")){
+import_survey <- function(path_file, metadata = metadata, drop_test = c("Spain", "Argentina")){
   tb_survey <- readxl::read_excel(path_file, skip = 0, col_names = FALSE, .name_repair = "minimal", guess_max = 5000)
   tb_survey <- tb_survey[-c(1,2), ]
   colnames(tb_survey) <- t(metadata[,"key_adj"])
