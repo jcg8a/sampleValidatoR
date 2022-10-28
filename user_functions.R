@@ -232,7 +232,7 @@ qualification <- function(survey = tb_survey, quali = c("whole Sample", "Complet
 #-------------------------------------------------------------------------------
 # User function table_detail
 #-------------------------------------------------------------------------------
-table_detail <- function(survey, metadata){
+table_detail <- function(survey = tb_survey, metadata = metadata){
   out <- .create_table_detail(survey, metadata)
   kable(out)
 }
