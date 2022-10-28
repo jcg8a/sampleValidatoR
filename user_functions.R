@@ -256,8 +256,8 @@ table_detail <- function(survey = tb_survey, meta = metadata){
 #-------------------------------------------------------------------------------
 # User function table_resume
 #-------------------------------------------------------------------------------
-table_resume <- function(survey = tb_survey, metadata = metadata){
-  out <- .create_table_resume(survey, metadata)
+table_resume <- function(survey = tb_survey, meta = metadata){
+  out <- .create_table_resume(survey, meta)
   cat("\n **README:** \n
       * Be aware of type_of question = other questions. Explore the table_detail function for a detailed description of the data. \n
       * type_of_question = check all that apply: accounts for the number of columns associated to that loop_question. \n
