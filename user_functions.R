@@ -280,9 +280,14 @@ table_resume <- function(survey = tb_survey, meta = metadata){
 #-------------------------------------------------------------------------------
 # User function import_metadata
 #-------------------------------------------------------------------------------
-import_metadata <- function(path_file){
+import_metadata <- function(path_file, csv_sep = ","){
 
-  metadata <- readxl::read_excel(path_file, n_max = 2, col_names = FALSE, .name_repair = "minimal")
+  if(stringr::str_sub(path_file, start = -3L) == "csv"){
+    metadata <- read.csv(path_file, header = FALSE, nrows = 2, sep = csv_sep)
+  } else{
+    metadata <- readxl::read_excel(path_file, n_max = 2, col_names = FALSE, .name_repair = "minimal")
+  }
+
   metadata <- as.data.frame(t(metadata))
   metadata <- metadata %>% dplyr::mutate(V3 = dplyr::if_else(str_starts(V1,"D") & stringr::str_starts(V2, "Adjusted"), paste0(V1,"_Adjusted"),V1))
 
@@ -301,11 +306,6 @@ import_metadata <- function(path_file){
 
   metadata
 }
-
-
-
-
-
 
 
 
