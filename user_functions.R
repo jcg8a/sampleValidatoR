@@ -321,8 +321,14 @@ import_metadata <- function(path_file, csv_sep = ","){
 #-------------------------------------------------------------------------------
 # User function import_survey
 #-------------------------------------------------------------------------------
-import_survey <- function(path_file, meta = metadata, drop_test = c("Spain", "Argentina")){
-  tb_survey <- readxl::read_excel(path_file, skip = 0, col_names = FALSE, .name_repair = "minimal", guess_max = 5000)
+import_survey <- function(path_file, meta = metadata, drop_test = c("Spain", "Argentina"), csv_sep = ","){
+
+  if(stringr::str_sub(path_file, start = -3L) == "csv"){
+    tb_survey <- read.csv(path_file, header = FALSE, skip = 0, sep = csv_sep)
+  } else{
+    tb_survey <- readxl::read_excel(path_file, skip = 0, col_names = FALSE, .name_repair = "minimal", guess_max = 5000)
+  }
+
   tb_survey <- tb_survey[-c(1,2), ]
   colnames(tb_survey) <- t(meta[,"key_adj"])
 
