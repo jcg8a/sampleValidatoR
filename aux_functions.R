@@ -111,7 +111,7 @@
 .binarize_question <- function(.df, .options){
   out <- if_else(rowSums(!is.na(.df)) == 0,
                  NA_integer_,
-                 as.integer(rowSums(.df == .options, na.rm = TRUE)))
+                 as.integer(rowSums(sapply(.df, `%in%`, .options), na.rm = TRUE)))
   return(out)
 }
 
