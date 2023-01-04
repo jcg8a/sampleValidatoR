@@ -337,3 +337,48 @@ import_survey <- function(path_file, meta = metadata, drop_test = c("Spain", "Ar
 
   tb_survey
 }
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+# User function v_pre
+#-------------------------------------------------------------------------------
+v_pre <- function(..., survey = tb_survey){
+  # 1. Common validators
+  # 2. Input formatting
+  input <- ...elt(1)
+  input_names <- names(input)
+  for (i in 1:length(input_names)) {
+    if(input_names[i] == ""){
+      input_names[i] = input[[i]]
+    }else{
+      input_names[i] = input_names[i]
+    }
+  }
+  names(input) <- input_names
+  # 3. Column selection
+  pre <- .filter_columns(.df = survey, .loop_question = input_names[1])
+  pre_binarized <- .binarize_question(.df = pre, .options = input[[input_names[1]]])
+
+  out <- list()
+  for (i in 2:length(input_names)) {
+    post <- .filter_columns(.df = survey, .loop_question = input_names[i])
+    post_binarized <- if_else(rowSums(!is.na(post)) == 0,
+                              NA_integer_,
+                              1L)
+
+    out[[i]] <- .validate_two_way(.pre = pre_binarized, .post = post_binarized)
+  }
+  # 4. Additional validations
+  # 5. Main function
+  # 6. Output
+  out
+}
