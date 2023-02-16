@@ -125,7 +125,9 @@ v_rank <- function(..., survey = tb_survey){
   for (i in 1:length(input)) {
     # 3. Column selection
     aux_q <- .filter_columns(survey, question[i])
+    aux_q <- aux_q %>% select(-ends_with("_text"))
     aux_r <- .filter_columns(survey, input[[i]])
+    aux_r <- aux_r %>% select(-ends_with("_text"))
     # 4. Additional validations
     # 5. Main function
     out[[i]] <- .validate_most(aux_q, aux_r)
@@ -133,8 +135,6 @@ v_rank <- function(..., survey = tb_survey){
   # 6. Output
   return(out)
 }
-
-
 
 
 
