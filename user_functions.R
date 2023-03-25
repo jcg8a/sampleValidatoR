@@ -79,7 +79,8 @@ v_exclusive <- function(..., survey = tb_survey){
   # 3. Column selection
   table <- list()
   for (i in 1:length(input)) {
-    table[[i]] <- .filter_columns(survey, input[i])
+    table[[i]] <- .filter_columns(survey, input[i]) %>%
+      select(-ends_with("_text"))
   }
   # 4. Additional validations
   # 5. Main function
